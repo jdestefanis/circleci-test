@@ -59,7 +59,6 @@ workflows:
     jobs:
       - build:
           context: development
-    - test_and_deploy
   version: 2
 
 # Original config.yml file:
