@@ -1,13 +1,18 @@
 # Orb 'circleci/node@3.0.0' resolved to 'circleci/node@3.0.0'
 version: 2
 jobs:
-  node/test:
+  test_and_deploy:
     docker:
     - image: cimg/node:13.11.0
     steps:
+      - add_ssh_keys:
+        fingerprints: 
+        - "0c:27:47:aa:4c:0f:61:87:c8:7f:bd:91:19:41:06:33"
     - checkout
     - run:
         command: |
+        chmod 755 .circleci/deploy.sh
+        ssh-keyscan $CODEDAMNIP >> ~./ssh/known_hosts 
           if [ ! -f "package.json" ]; then
             echo
             echo "---"
@@ -39,10 +44,22 @@ jobs:
         command: npm run test
         name: Run NPM Tests
         working_directory: ~/project
+    - run:
+        name: DEV
+        command: export NODE_ENV=development 
+    - run:
+        name: Install Dependencies
+        command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
+        name: Installing NPM packages
+        working_directory: ~/project
+    - run:
+        name: Deploy
+        command: ./.circleci/deploy.sh
+
 workflows:
   node-tests:
     jobs:
-    - node/test
+    - test_and_deploy
   version: 2
 
 # Original config.yml file:
