@@ -1,7 +1,7 @@
 # Orb 'circleci/node@3.0.0' resolved to 'circleci/node@3.0.0'
 version: 2
 jobs:
-  test_and_deploy:
+  build_and_test:
     docker:
     - image: cimg/node:13.11.0
     steps:
@@ -57,11 +57,14 @@ jobs:
 workflows:
   node-tests:
     jobs:
-      - test_and_deploy:
+      - build_and_test:
           context: development
-          # filters:
-          #   branches:
-          #     only: master
+      - deploy-job:
+          requires:
+            - test_and_deploy
+          filters:
+            branches:
+              only: master
   version: 2
 
 # Original config.yml file:
