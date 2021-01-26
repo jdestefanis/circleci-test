@@ -11,6 +11,7 @@ jobs:
     - checkout
     - run:
         command: |
+          chmod 755 .circleci/deploy.sh
           if [ ! -f "package.json" ]; then
             echo
             echo "---"
