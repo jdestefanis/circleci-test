@@ -1,6 +1,6 @@
 rm -rf .git
 rm -rf .gitignore
-git config --global user.email javierdestefanis@hotmail.com
+git config --global user.email "javierdestefanis@hotmail.com"
 # git config --global user.email $GH_EMAIL
 # echo $GH_EMAIL
 git config --global user.name "jdestefanis"
