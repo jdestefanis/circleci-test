@@ -19,5 +19,5 @@ git commit -m "Deploying"
 
 git remote add origin git@github.com:jdestefanis/circleci-test.git
 git branch -M development
-git pull
+git pull origin main
 git push -u origin development
