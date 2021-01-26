@@ -5,9 +5,9 @@ git config --global user.email "javierdestefanis@hotmail.com"
 # echo $GH_EMAIL
 git config --global user.name "jdestefanis"
 # mv .gitignore_travis .gitignore
-# git init .
-# git add .
-# git commit -m "Deploying"
+git init .
+git add .
+git commit -m "Deploying"
 # git remote add origin https://github.com/jdestefanis/circleci-test.git
 # git push --force development main
 ## git push -u origin development
