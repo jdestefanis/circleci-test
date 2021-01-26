@@ -57,6 +57,8 @@ jobs:
 workflows:
   node-tests:
     jobs:
+      - build:
+          context: development
     - test_and_deploy
   version: 2
 
