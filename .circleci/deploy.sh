@@ -2,7 +2,7 @@ rm -rf .git
 rm -rf .gitignore
 git config --global user.email "javierdestefanis@hotmail.com"
 git config --global user.name "jdestefanis"
-mv .gitignore_travis .gitignore
+# mv .gitignore_travis .gitignore
 git init .
 git add .
 git commit -m "Deploying"
