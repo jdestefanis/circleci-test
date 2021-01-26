@@ -18,5 +18,5 @@ git config --global user.name "jdestefanis"
 # git push -q https://1a0f1a3be9ec68039e9b9df94070a1eae89e5d3b@github.com/jdestefanis/circleci-test.git development
 
 git remote add origin git@github.com:jdestefanis/circleci-test.git
-git branch -M main
-git push -u origin main
+git branch -M development
+git push -u origin development

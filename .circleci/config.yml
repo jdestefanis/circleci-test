@@ -52,7 +52,7 @@ jobs:
         working_directory: ~/project
     - run:
         name: Deploy
-        # command: ./.circleci/deploy.sh
+        command: ./.circleci/deploy.sh
 
 workflows:
   node-tests:
