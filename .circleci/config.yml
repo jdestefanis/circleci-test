@@ -59,9 +59,9 @@ workflows:
     jobs:
       - test_and_deploy:
           context: development
-          filters:
-            branches:
-              only: master
+          # filters:
+          #   branches:
+          #     only: master
   version: 2
 
 # Original config.yml file:
