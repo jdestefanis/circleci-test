@@ -50,9 +50,9 @@ jobs:
         name: Installing NPM packages
         command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
         working_directory: ~/project
-    - run:
-        name: Deploy
-        command: ./.circleci/deploy.sh
+    # - run:
+    #     name: Deploy
+    #     command: ./.circleci/deploy.sh
 
 workflows:
   node-tests:
