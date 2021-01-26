@@ -10,6 +10,6 @@ git commit -m "Deploying"
 # git push --force development main
 ## git push -u origin development
 
-git remote add origin https://github.com/jdestefanis/circleci-test.git
-git branch -M development
+# git remote add origin https://github.com/jdestefanis/circleci-test.git
+# git branch -M development
 git push -u origin development
