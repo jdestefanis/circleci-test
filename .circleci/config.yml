@@ -10,6 +10,10 @@ jobs:
     - add_ssh_keys:
         fingerprints: 
         - "14:93:0f:de:f3:d1:02:c5:e1:0a:0a:d4:83:82:69:0e"
+    - run:
+        name: SSH Disable Host Key Checking
+        command: |
+          echo "StrictHostKeyChecking=no">> ~/.ssh/config        
     - checkout
     - run:
         command: |
@@ -52,31 +56,30 @@ jobs:
         name: Installing NPM packages
         command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
         working_directory: ~/project
-    - run:
-        name: Deploy
-        command: ./.circleci/deploy.sh
+    # - run:
+    #     name: Deploy
+    #     command: ./.circleci/deploy.sh
   
   # deploy-job:
-  #   - run:
-  #     name: DEV
-  #     command: |-
-  #         echo "============================================ Run Configs ============================================"
-  #         export SSH_USER=<< parameters.ssh-user >>
-  #         export SSH_HOST=<< parameters.ssh-host >>
-  #         export GIT_USER=<< parameters.git-user >>
-  #         export GIT_REPO=<< parameters.git-repo >>
-  #         export GIT_BRANCH=<< parameters.git-branch >>
-  #         echo git_user         : ${GIT_USER}
-  #         echo git_repo         : ${GIT_REPO}
-  #         echo git_branch       : ${GIT_BRANCH}
-  #         echo SSH_USER         : ${SSH_USER}
-  #         echo SSH_HOST         : ${SSH_HOST}
-  #         echo "====================================================================================================="
-  #         echo "Running new Container..."
-  #         ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
-  #           bash -c "git pull"
-  #         EOF      
-    
+    - run:
+        name: Deploy
+        command: |-
+          echo "============================================ Run Configs ============================================"
+          export SSH_USER=<< parameters.ssh-user >>
+          export SSH_HOST=<< parameters.ssh-host >>
+          export GIT_USER=<< parameters.git-user >>
+          export GIT_REPO=<< parameters.git-repo >>
+          export GIT_BRANCH=<< parameters.git-branch >>
+          echo git_user         : ${GIT_USER}
+          echo git_repo         : ${GIT_REPO}
+          echo git_branch       : ${GIT_BRANCH}
+          echo SSH_USER         : ${SSH_USER}
+          echo SSH_HOST         : ${SSH_HOST}
+          echo "====================================================================================================="
+          echo "Running new Container..."
+          ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
+            bash -c "git pull"
+          EOF
 
 workflows:
   version: 2
