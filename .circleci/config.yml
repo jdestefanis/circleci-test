@@ -77,7 +77,7 @@ jobs:
           echo SSH_HOST         : ${SSH_HOST}
           echo "====================================================================================================="
           echo "Running new Container..."
-          ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
+          ssh -o "StrictHostKeyChecking no" ${ubuntu}@${ip-172-31-60-140} \<<- EOF
             bash -c "git pull"
           EOF
 
