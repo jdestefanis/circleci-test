@@ -1,7 +1,5 @@
-version: 2.2
-orbs: # adds orbs to your configuration
-  jira: circleci/jira@1.3.1 # invokes the Jira orb, making its commands accessible
-
+# Orb 'circleci/node@3.0.0' resolved to 'circleci/node@3.0.0'
+version: 2
 jobs:
   build_and_test:
     docker:
@@ -10,10 +8,6 @@ jobs:
     - add_ssh_keys:
         fingerprints: 
         - "14:93:0f:de:f3:d1:02:c5:e1:0a:0a:d4:83:82:69:0e"
-    - run:
-        name: SSH Disable Host Key Checking
-        command: |
-          echo "StrictHostKeyChecking=no">> ~/.ssh/config    
     - checkout
     - run:
         command: |
@@ -23,9 +17,12 @@ jobs:
             echo "---"
             echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
             echo "---"
+            echo
             echo "Current directory: $(pwd)"
             echo
+            echo
             echo "List directory: "
+            echo
             ls
             exit 1
           fi
@@ -59,8 +56,8 @@ jobs:
   
   deploy-job:
     - run:
-        name: DEV
-        command: |-
+      name: DEV
+      command: |-
           echo "============================================ Run Configs ============================================"
           export SSH_USER=<< parameters.ssh-user >>
           export SSH_HOST=<< parameters.ssh-host >>
@@ -76,11 +73,11 @@ jobs:
           echo "Running new Container..."
           ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
             bash -c "git pull"
-          EOF
+          EOF      
+    
 
 workflows:
   version: 2
-
   node-tests:
     jobs:
       - build_and_test:
