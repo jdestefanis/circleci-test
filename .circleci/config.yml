@@ -65,22 +65,12 @@ jobs:
         name: Deploy
         command: |-
           echo "============================================ Run Configs ============================================"
-          # export SSH_USER=<< parameters.ssh-user >>
-          # export SSH_HOST=<< parameters.ssh-host >>
-          # export GIT_USER=<< parameters.git-user >>
-          # export GIT_REPO=<< parameters.git-repo >>
-          # export GIT_BRANCH=<< parameters.git-branch >>
-          echo git_user         : ${GIT_USER}
-          echo git_repo         : ${GIT_REPO}
-          echo git_branch       : ${GIT_BRANCH}
-          echo SSH_USER         : ${SSH_USER}
-          echo SSH_HOST         : ${SSH_HOST}
           echo "====================================================================================================="
           echo "Running new Container..."
-          # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
-          ssh -o "StrictHostKeyChecking no" ubuntu@@ip-172-31-60-140 \<<- EOF
-            bash -c "git pull"
-          EOF
+          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com \<<- EOF
+          cd circleci-test \<<- EOF
+          bash -c "git branch development" \<<- EOF
+          bash -c "git pull" \<<- EOF
 
 workflows:
   version: 2
