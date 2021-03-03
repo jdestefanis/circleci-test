@@ -59,8 +59,8 @@ jobs:
   
   deploy-job:
     - run:
-      name: DEV
-      command: |-
+        name: DEV
+        command: |-
           echo "============================================ Run Configs ============================================"
           export SSH_USER=<< parameters.ssh-user >>
           export SSH_HOST=<< parameters.ssh-host >>
@@ -76,8 +76,7 @@ jobs:
           echo "Running new Container..."
           ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
             bash -c "git pull"
-          EOF      
-    
+          EOF
 
 workflows:
   version: 2
