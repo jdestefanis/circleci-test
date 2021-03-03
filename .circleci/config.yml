@@ -11,9 +11,9 @@ jobs:
         fingerprints: 
         - "14:93:0f:de:f3:d1:02:c5:e1:0a:0a:d4:83:82:69:0e"
     - run:
-      name: SSH Disable Host Key Checking
-      command: |
-        echo "StrictHostKeyChecking=no">> ~/.ssh/config    
+        name: SSH Disable Host Key Checking
+        command: |
+          echo "StrictHostKeyChecking=no">> ~/.ssh/config    
     - checkout
     - run:
         command: |
