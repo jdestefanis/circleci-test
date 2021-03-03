@@ -63,12 +63,14 @@ jobs:
   # deploy-job:
     - run:
         name: Deploy
-        command: |-
+        command: |
           echo "============================================ Run Configs ============================================"
           echo "====================================================================================================="
           echo "Running new Container..."
-          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com \<<- EOF
-
+          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com
+          bash -c "cd circleci-test"
+          bash -c "git branch development"
+          bash -c "git pull"
 
 workflows:
   version: 2
