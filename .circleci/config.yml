@@ -67,9 +67,10 @@ jobs:
         command: |
           echo "============================================ Deploying ============================================"
           ssh -o "StrictHostKeyChecking no" ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com
-          cd circleci-test
-          git branch development
-          git pull
+    - run:
+        name: DeployGitPull
+        command: |
+          cd circleci-test && git branch development && git pull
 
 workflows:
   version: 2
