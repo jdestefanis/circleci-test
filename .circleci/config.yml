@@ -9,7 +9,7 @@ jobs:
     steps:
     - add_ssh_keys:
         fingerprints: 
-        - "32:79:0e:8e:1c:b8:4e:7a:0c:ed:51:d3:72:ca:86:1b"
+        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
     - run:
         name: SSH Disable Host Key Checking
         command: |
