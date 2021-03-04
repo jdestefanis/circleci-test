@@ -61,7 +61,7 @@ jobs:
     #     name: Deploy
     #     command: ./.circleci/deploy.sh
   
-  deploy-job:
+  # deploy-job:
     - run:
         name: Deploy
         command: |
