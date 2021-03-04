@@ -9,7 +9,7 @@ jobs:
     steps:
     - add_ssh_keys:
         fingerprints: 
-        - "b7:ca:b1:3a:b3:90:e2:e1:8d:fe:8d:c6:0b:e2:ab:c9" #additional key
+        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
         # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
     - run:
         name: SSH Disable Host Key Checking
@@ -68,10 +68,10 @@ jobs:
           echo "============================================ Run Configs ============================================"
           echo "====================================================================================================="
           echo "Running new Container..."
-          ssh -o "StrictHostKeyChecking no" ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com
-          bash -c "cd circleci-test"
-          bash -c "git branch development"
-          bash -c "git pull"
+          ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" && "cd circleci-test" && "git branch development" && "git pull"
+          # bash -c "cd circleci-test"
+          # bash -c "git branch development"
+          # bash -c "git pull"
 
 workflows:
   version: 2
