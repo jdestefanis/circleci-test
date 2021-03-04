@@ -68,10 +68,13 @@ jobs:
           echo "============================================ Run Configs ============================================"
           echo "====================================================================================================="
           echo "Running new Container..."
-          ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" && "cd circleci-test" && "git branch development" && "git pull"
-          # bash -c "cd circleci-test"
-          # bash -c "git branch development"
-          # bash -c "git pull"
+          ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" \<<- EOF 
+            cd circleci-test \ 
+            git branch development \
+            # bash -c "cd circleci-test"
+            # bash -c "git branch development"
+            bash -c "git pull"
+          EOF
 
 workflows:
   version: 2
