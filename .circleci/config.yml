@@ -1,3 +1,4 @@
+version: 2.1
 orbs: # adds orbs to your configuration
   jira: circleci/jira@1.3.1 # invokes the Jira orb, making its commands accessible
   slack: circleci/slack@4.3.0
@@ -90,7 +91,6 @@ jobs:
               git checkout main && \
               git pull'
 
-version: 2.1
 workflows:
   build-and-deploy:
     jobs:
@@ -102,9 +102,11 @@ workflows:
 
       - deploy-job-dev:
           name: Deploy to Development
+          steps:
+            - checkout
           post-steps:
             - jira/notify:
-                job_type: deployment              
+                job_type: deployment
                 environment_type: development
           requires:
             - build_and_test
