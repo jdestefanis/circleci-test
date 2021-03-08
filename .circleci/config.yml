@@ -77,18 +77,21 @@ jobs:
             git pull'
 workflows:
   version: 2
+  
   build-and-deploy:
     jobs:
       - build_and_test:
-          context: development
+          # context: development
+          filters:
+            branches:
+              only: 
+                - main
       - deploy-job:
           requires:
             - build_and_test
           filters:
             branches:
-              only: master        
-  
-
+              only: main
 # Original config.yml file:
 # version: 2.1
 # orbs:
