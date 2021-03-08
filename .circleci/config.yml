@@ -91,9 +91,8 @@ jobs:
               git checkout main && \
               git pull'
 
+version: 2.1
 workflows:
-  version: 2
-
   build-and-deploy:
     jobs:
       - build_and_test:
@@ -103,11 +102,11 @@ workflows:
                 - main #Branch que elegimos para testear dev
 
       - deploy-job-dev:
-          # name: Deploy to Development
-          # post-steps:
-          #   - jira/notify:
-          #       environment_type: development
-          #       job_type: deployment
+          name: Deploy to Development
+          post-steps:
+            - jira/notify:
+                environment_type: development
+                job_type: deployment
           requires:
             - build_and_test
           filters:
