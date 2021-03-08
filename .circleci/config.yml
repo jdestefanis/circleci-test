@@ -84,6 +84,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: 
           - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
+      - checkout    
       - run:
           name: Deploy
           command: |-
@@ -102,8 +103,6 @@ workflows:
 
       - deploy-job-dev:
           name: Deploy to Development
-          steps:
-            - checkout
           post-steps:
             - jira/notify:
                 job_type: deployment
