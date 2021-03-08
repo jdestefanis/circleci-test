@@ -64,18 +64,24 @@ jobs:
   # deploy-job:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
   # ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" cat \<<EOF
+    # - run:
+    #     name: Deploy
+    #     command: |
+    #       echo "============================================ Deploying ============================================"
+    #       ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com"
+    #         echo "Building..."
+    #         git pull
+    #       EOF
+    # - run:
+    #     name: DeployGitPull
+    #     command: |
+    #       cd circleci-test && git branch development && git pull
     - run:
-        name: Deploy
-        command: |
-          echo "============================================ Deploying ============================================"
-          ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com"
-            echo "Building..."
-            git pull
-          EOF
-    - run:
-        name: DeployGitPull
-        command: |
-          cd circleci-test && git branch development && git pull
+      name: Deploy
+      command: |-
+        ssh $SSH_USER@$SSH_HOST 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd /circleci-test && \
+          git branch development && \
+          git pull && \"'
 
 workflows:
   version: 2
