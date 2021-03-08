@@ -76,11 +76,11 @@ jobs:
     #     name: DeployGitPull
     #     command: |
     #       cd circleci-test && git branch development && git pull
+    #       git branch development && \
     - run:
         name: Deploy
         command: |-
           ssh $SSH_USER@$SSH_HOST 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            git branch development && \
             git pull && \"'
 
 workflows:
