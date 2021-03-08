@@ -76,7 +76,7 @@ jobs:
             git checkout main && \
             git pull'
 workflows:
-  # version: 2
+  version: 2
   build-and-deploy:
     jobs:
       - build_and_test:
