@@ -126,7 +126,7 @@ workflows:
                 environment_type: testing
                 job_type: deployment      
           requires:
-            - approve-stage-deploy
+            - approve-demo-deploy
           filters:
             branches:
               only: main #Branch que elegimos para deployar en staging
