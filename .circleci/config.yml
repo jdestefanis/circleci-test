@@ -77,7 +77,7 @@ jobs:
             git checkout main && \
             git pull'
 
-  deploy-job-staging:
+  deploy-job-demo:
     machine:
       enabled: true
     steps:
