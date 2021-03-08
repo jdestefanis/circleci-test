@@ -104,10 +104,10 @@ workflows:
 
       - deploy-job-dev:
           name: Deploy to Development
-          post-steps:
-            - jira/notify:
-                environment_type: development
-                job_type: deployment
+          # post-steps:
+          #   - jira/notify:
+          #       environment_type: development
+          #       job_type: deployment
           requires:
             - build_and_test
           filters:
@@ -123,10 +123,10 @@ workflows:
               ignore: /.*/              
       - deploy-job-demo:
           name: Deploy to QA
-          post-steps:
-            - jira/notify:
-                environment_type: testing
-                job_type: deployment      
+          # post-steps:
+          #   - jira/notify:
+          #       environment_type: testing
+          #       job_type: deployment      
           requires:
             - approve-demo-deploy
           filters:
