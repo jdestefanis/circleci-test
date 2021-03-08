@@ -81,7 +81,7 @@ jobs:
         name: Deploy
         command: |-
           ssh $SSH_USER@$SSH_HOST 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            git pull && \"'
+            git pull"'
 
 workflows:
   version: 2
