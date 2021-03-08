@@ -61,7 +61,7 @@ jobs:
     #     name: Deploy
     #     command: ./.circleci/deploy.sh
   
-  deploy-job:
+  deploy-job-dev:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
     machine:
       enabled: true
@@ -72,9 +72,24 @@ jobs:
     - run:
         name: Deploy
         command: |-
-          ssh $SSH_USER@$SSH_HOST 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+          ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
             git checkout main && \
             git pull'
+
+  deploy-job-staging:
+    machine:
+      enabled: true
+    steps:
+    - add_ssh_keys:
+        fingerprints: 
+        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
+    - run:
+        name: Deploy
+        command: |-
+          ssh $SSH_USER@$SSH_HOST_STG 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+            git checkout main && \
+            git pull'
+
 workflows:
   version: 2
 
@@ -84,10 +99,23 @@ workflows:
           filters:
             branches:
               only: 
-                - main
-      - deploy-job:
+                - main #Branch que elegimos para testear dev
+      - deploy-job-dev:
           requires:
             - build_and_test
           filters:
             branches:
-              only: main
+              only: main #Branch que elegimos para deployar en dev dev
+      - approve-stage-deploy:
+          type: approval # Es necesario aprobar el deploy a staging desde github
+          filters:
+            tags:
+              only: /v\d+\.\d+\.\d+/
+            branches:
+              ignore: /.*/              
+      - deploy-job-staging:
+          requires:
+            - approve-stage-deploy
+          filters:
+            branches:
+              only: main #Branch que elegimos para deployar en staging
