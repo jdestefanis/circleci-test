@@ -102,11 +102,11 @@ workflows:
               only: 
                 - main #Branch que elegimos para testear dev
       - deploy-job-dev:
-          name: Deploy to Development
-          post-steps:
-            - jira/notify:
-                environment_type: development
-                job_type: deployment
+          # name: Deploy to Development
+          # post-steps:
+          #   - jira/notify:
+          #       environment_type: development
+          #       job_type: deployment
           requires:
             - build_and_test
           filters:
@@ -120,11 +120,11 @@ workflows:
             branches:
               ignore: /.*/              
       - deploy-job-demo:
-          name: Deploy to QA (Demo)
-          post-steps:
-            - jira/notify:
-                environment_type: testing
-                job_type: deployment      
+          # name: Deploy to QA (Demo)
+          # post-steps:
+          #   - jira/notify:
+          #       environment_type: testing
+          #       job_type: deployment      
           requires:
             - approve-demo-deploy
           filters:
