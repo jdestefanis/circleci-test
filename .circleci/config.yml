@@ -89,7 +89,7 @@ jobs:
             ssh $SSH_USER@$SSH_HOST_STG 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
               git checkout main && \
               git pull'
- 
+
 version: 2.1
 workflows:
   build-and-deploy:
