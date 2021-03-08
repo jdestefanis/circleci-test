@@ -62,11 +62,14 @@ jobs:
     #     command: ./.circleci/deploy.sh
   
   # deploy-job:
+  # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
     - run:
         name: Deploy
         command: |
           echo "============================================ Deploying ============================================"
           ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" cat \<<EOF
+            echo "Building..."
+            git pull
           EOF
     - run:
         name: DeployGitPull
