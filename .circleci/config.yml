@@ -63,6 +63,8 @@ jobs:
   
   deploy-job:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
+    docker:
+    - image: cimg/node:13.11.0
     steps:
     - add_ssh_keys:
         fingerprints: 
