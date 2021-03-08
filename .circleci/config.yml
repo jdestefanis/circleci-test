@@ -61,22 +61,12 @@ jobs:
     #     name: Deploy
     #     command: ./.circleci/deploy.sh
   
-  # deploy-job:
+  deploy-job:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
-  # ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com" cat \<<EOF
-    # - run:
-    #     name: Deploy
-    #     command: |
-    #       echo "============================================ Deploying ============================================"
-    #       ssh -o "StrictHostKeyChecking no" "ubuntu@ec2-3-229-45-120.compute-1.amazonaws.com"
-    #         echo "Building..."
-    #         git pull
-    #       EOF
-    # - run:
-    #     name: DeployGitPull
-    #     command: |
-    #       cd circleci-test && git branch development && git pull
-    #       git branch development && \
+    steps:
+    - add_ssh_keys:
+        fingerprints: 
+        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key  
     - run:
         name: Deploy
         command: |-
@@ -89,7 +79,6 @@ workflows:
     jobs:
       - build_and_test:
           context: development
-
       - deploy-job:
           requires:
             - build_and_test
