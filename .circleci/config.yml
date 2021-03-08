@@ -77,11 +77,10 @@ jobs:
             git pull'
 workflows:
   version: 2
-  
+
   build-and-deploy:
     jobs:
       - build_and_test:
-          # context: development
           filters:
             branches:
               only: 
@@ -92,11 +91,3 @@ workflows:
           filters:
             branches:
               only: main
-# Original config.yml file:
-# version: 2.1
-# orbs:
-#   node: circleci/node@3.0.0
-# workflows:
-#   node-tests:
-#     jobs:
-#       - node/test
