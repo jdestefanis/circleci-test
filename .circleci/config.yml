@@ -104,9 +104,8 @@ workflows:
           name: Deploy to Development
           post-steps:
             - jira/notify:
-                environment: development
+                job_type: deployment              
                 environment_type: development
-                job_type: deployment
           requires:
             - build_and_test
           filters:
