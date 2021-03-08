@@ -6,90 +6,90 @@ orbs: # adds orbs to your configuration
 jobs: 
   build_and_test:
     docker:
-    - image: cimg/node:13.11.0
+      - image: cimg/node:13.11.0
     steps:
-    - add_ssh_keys:
-        fingerprints: 
-        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
-        # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
-    - run:
-        name: SSH Disable Host Key Checking
-        command: |
-          echo "StrictHostKeyChecking=no">> ~/.ssh/config        
-    - checkout
-    - run:
-        command: |
-          chmod 755 .circleci/deploy.sh
-          if [ ! -f "package.json" ]; then
-            echo
-            echo "---"
-            echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
-            echo "---"
-            echo
-            echo "Current directory: $(pwd)"
-            echo
-            echo
-            echo "List directory: "
-            echo
-            ls
-            exit 1
-          fi
-        name: Checking for package.json.
-        working_directory: ~/project
-    - restore_cache:
-        keys:
-        - node-deps-v1-{{ .Branch }}-{{ checksum "~/project/package-lock.json" }}
-    - run:
-        command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
-        name: Installing NPM packages
-        working_directory: ~/project
-    - save_cache:
-        key: node-deps-v1-{{ .Branch }}-{{ checksum "~/project/package-lock.json" }}
-        paths:
-        - ~/.npm
-    - run:
-        command: npm run test
-        name: Run NPM Tests
-        working_directory: ~/project
-    - run:
-        name: DEV
-        command: export NODE_ENV=development
-    - run:
-        name: Installing NPM packages
-        command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
-        working_directory: ~/project
-    # - run:
-    #     name: Deploy
-    #     command: ./.circleci/deploy.sh
+      - add_ssh_keys:
+          fingerprints: 
+          - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
+          # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
+      - run:
+          name: SSH Disable Host Key Checking
+          command: |
+            echo "StrictHostKeyChecking=no">> ~/.ssh/config        
+      - checkout
+      - run:
+          command: |
+            chmod 755 .circleci/deploy.sh
+            if [ ! -f "package.json" ]; then
+              echo
+              echo "---"
+              echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
+              echo "---"
+              echo
+              echo "Current directory: $(pwd)"
+              echo
+              echo
+              echo "List directory: "
+              echo
+              ls
+              exit 1
+            fi
+          name: Checking for package.json.
+          working_directory: ~/project
+      - restore_cache:
+          keys:
+          - node-deps-v1-{{ .Branch }}-{{ checksum "~/project/package-lock.json" }}
+      - run:
+          command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
+          name: Installing NPM packages
+          working_directory: ~/project
+      - save_cache:
+          key: node-deps-v1-{{ .Branch }}-{{ checksum "~/project/package-lock.json" }}
+          paths:
+          - ~/.npm
+      - run:
+          command: npm run test
+          name: Run NPM Tests
+          working_directory: ~/project
+      - run:
+          name: DEV
+          command: export NODE_ENV=development
+      - run:
+          name: Installing NPM packages
+          command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
+          working_directory: ~/project
+      # - run:
+      #     name: Deploy
+      #     command: ./.circleci/deploy.sh
   
   deploy-job-dev:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
     machine:
       enabled: true
     steps:
-    - add_ssh_keys:
-        fingerprints: 
-        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key  
-    - run:
-        name: Deploy
-        command: |-
-          ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            git checkout main && \
-            git pull'
+      - add_ssh_keys:
+          fingerprints: 
+          - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key  
+      - run:
+          name: Deploy
+          command: |-
+            ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+              git checkout main && \
+              git pull'
 
   deploy-job-demo:
     machine:
       enabled: true
     steps:
-    - add_ssh_keys:
-        fingerprints: 
-        - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
-    - run:
-        name: Deploy
-        command: |-
-          ssh $SSH_USER@$SSH_HOST_STG 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            git checkout main && \
-            git pull'
+      - add_ssh_keys:
+          fingerprints: 
+          - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
+      - run:
+          name: Deploy
+          command: |-
+            ssh $SSH_USER@$SSH_HOST_STG 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+              git checkout main && \
+              git pull'
 
 workflows:
   version: 2
@@ -101,8 +101,9 @@ workflows:
             branches:
               only: 
                 - main #Branch que elegimos para testear dev
+
       - deploy-job-dev:
-          # name: Deploy to Development
+          name: Deploy to Development
           post-steps:
             - jira/notify:
                 environment_type: development
@@ -112,6 +113,7 @@ workflows:
           filters:
             branches:
               only: main #Branch que elegimos para deployar en dev dev
+
       - approve-demo-deploy:
           type: approval # Es necesario aprobar el deploy a staging desde github
           filters:
@@ -120,11 +122,11 @@ workflows:
             branches:
               ignore: /.*/              
       - deploy-job-demo:
-          # name: Deploy to QA (Demo)
-          # post-steps:
-          #   - jira/notify:
-          #       environment_type: testing
-          #       job_type: deployment      
+          name: Deploy to QA
+          post-steps:
+            - jira/notify:
+                environment_type: testing
+                job_type: deployment      
           requires:
             - approve-demo-deploy
           filters:
