@@ -80,9 +80,8 @@ jobs:
       - run:
           name: Deploy
           command: |-
-            ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; && \
-              ls && \
-              ls'
+            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#'
+              ls
   deploy-job-demo:
     machine:
       enabled: true
