@@ -84,7 +84,7 @@ jobs:
       - run:
           name: Deploy2
           command: |-
-            ls
+            'ls > /dev/null &'
   deploy-job-demo:
     machine:
       enabled: true
