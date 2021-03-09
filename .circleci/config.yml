@@ -75,7 +75,8 @@ jobs:
           command: |-
             ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
               git checkout main && \
-              git pull'
+              git pull && \
+              ls'
 
   deploy-job-demo:
     machine:
