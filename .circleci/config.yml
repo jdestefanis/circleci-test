@@ -105,17 +105,36 @@ workflows:
               only: 
                 - main #Branch que elegimos para testear devv
 
-      - deploy-job-dev:
-          name: Deploy to Development
-          post-steps:
-            - jira/notify:
-                job_type: deployment
-                environment_type: development
-          requires:
-            - build_and_test
+      - approve-dev-deployment:
+          type: approval
           filters:
             branches:
-              only: main #Branch que elegimos para deployar en dev dev
+              only:
+                - main
+      # - slack/on-hold:
+      #     channel: '@development'
+      #     requires:
+      #       - approve-dev-deployment
+      - deploy-job-dev:
+          name: Deploy to Dev
+          post-steps:
+            - jira/notify:
+                environment_type: development
+                job_type: deployment
+          requires:
+            - approve-dev-deployment
+
+      # - deploy-job-dev:
+      #     name: Deploy to Development
+      #     post-steps:
+      #       - jira/notify:
+      #           job_type: deployment
+      #           environment_type: development
+      #     requires:
+      #       - build_and_test
+      #     filters:
+      #       branches:
+      #         only: main #Branch que elegimos para deployar en dev dev
 
       - approve-demo-deploy: 
           type: approval # Es necesario aprobar el deploy a staging desde github
