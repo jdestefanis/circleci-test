@@ -74,11 +74,11 @@ jobs:
       - run:
           name: Deploy
           command: |-
-            # ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+            ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; ls/ && \
             # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
-            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && 22rh825# && \
-              'bash -c ls \
-              ls && exit'
+            # ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && 22rh825# && \
+            #  'bash -c ls \
+            #  ls && exit'
   deploy-job-demo:
     machine:
       enabled: true
