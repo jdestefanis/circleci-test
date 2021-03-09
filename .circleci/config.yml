@@ -11,7 +11,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "82:58:83:fa:7b:fe:e2:fa:66:d6:f3:06:74:bc:3f:88" #additional key
+          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key
           # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
       - run:
           name: SSH Disable Host Key Checking
@@ -67,11 +67,14 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "82:58:83:fa:7b:fe:e2:fa:66:d6:f3:06:74:bc:3f:88" #additional key  
+          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key  
       - run:
           name: Deploy
           command: |-
-            ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
+            # ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+            # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
+             ssh -o "StrictHostKeyChecking no" wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c ls'
+
   deploy-job-demo:
     machine:
       enabled: true
