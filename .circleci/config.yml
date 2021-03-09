@@ -67,13 +67,18 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key  
+          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key 
+      - run:
+          name: Update known hosts
+          command: ssh-keyscan -H ftp-5029.luxsci.com  >> ~/.ssh/known_hosts
       - run:
           name: Deploy
           command: |-
             # ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
             # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
-             ssh -o "StrictHostKeyChecking no" wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c ls'
+             ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && \
+            'bash -c 22rh825# && \
+            ls'
 
   deploy-job-demo:
     machine:
