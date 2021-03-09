@@ -77,7 +77,7 @@ jobs:
             # ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
             # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
              ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && \
-            'bash -c 22rh825#;ls'
+            'bash -c 22rh825#'
   deploy-job-demo:
     machine:
       enabled: true
