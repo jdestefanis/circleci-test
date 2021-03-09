@@ -11,7 +11,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key
+          - "25:a8:56:90:95:0b:7c:41:5e:56:93:3c:50:e3:34:47" #additional key
           # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
       - run:
           name: SSH Disable Host Key Checking
@@ -64,22 +64,25 @@ jobs:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
             # ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; ls/ && \
             # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
+            # ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#' 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+            #   bash -c 'ls && \
+            #   exit 0'            
 
     machine:
       enabled: true
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "fd:01:3a:a5:75:2c:c4:ed:0d:e2:20:86:19:17:8f:c4" #additional key 
+          - "25:a8:56:90:95:0b:7c:41:5e:56:93:3c:50:e3:34:47" #additional key 
       - run:
           name: Update known hosts
           command: ssh-keyscan -H ftp-5029.luxsci.com  >> ~/.ssh/known_hosts
       - run:
           name: Deploy
           command: |-
-            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && 22rh825# \
-              bash -c 'ls && \
-              exit 0'
+            ssh wpilimon@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; && \
+              ls && \
+              ls'
   deploy-job-demo:
     machine:
       enabled: true
