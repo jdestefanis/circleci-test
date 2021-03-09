@@ -80,7 +80,11 @@ jobs:
       - run:
           name: Deploy
           command: |-
-            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#' && < myscript.sh
+            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#' && < myscript.sh \
+              exit 0 \
+            # ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+            #   git checkout main && \
+            #   git pull'            
   deploy-job-demo:
     machine:
       enabled: true
