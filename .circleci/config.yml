@@ -3,15 +3,14 @@ orbs: # adds orbs to your configuration
   jira: circleci/jira@1.3.1 # invokes the Jira orb, making its commands accessible
   slack: circleci/slack@4.3.0
 
-jobs:
-  
+jobs: 
   build_and_test:
     docker:
       - image: cimg/node:13.11.0
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "25:a8:56:90:95:0b:7c:41:5e:56:93:3c:50:e3:34:47" #additional key
+          - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key
           # - "8b:af:af:73:21:2e:2a:7f:b3:73:74:a9:5f:c0:f6:41" #deployment key
       - run:
           name: SSH Disable Host Key Checking
@@ -20,6 +19,7 @@ jobs:
       - checkout
       - run:
           command: |
+            chmod 755 .circleci/deploy.sh
             if [ ! -f "package.json" ]; then
               echo
               echo "---"
@@ -58,33 +58,25 @@ jobs:
           name: Installing NPM packages
           command: "if [[ ! -z \"\" ]]; then\n  echo \"Running override package installation command:\"\n  \nelse\n  npm ci\nfi\n"
           working_directory: ~/project
+      # - run:
+      #     name: Deploy
+      #     command: ./.circleci/deploy.sh
   
-
   deploy-job-dev:
   # ssh -o "StrictHostKeyChecking no" ${SSH_USER}@${SSH_HOST} \<<- EOF
-            # ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; ls/ && \
-            # ssh -p 122 -oUser='wpilimon@ezscriptrx.com' ftp-5029.luxsci.com 'bash -c 22rh825#;ls'
-            # ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#' 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            #   bash -c 'ls && \
-            #   exit 0'            
-
     machine:
       enabled: true
     steps:
       - add_ssh_keys:
           fingerprints: 
-          - "25:a8:56:90:95:0b:7c:41:5e:56:93:3c:50:e3:34:47" #additional key 
-      - run:
-          name: Update known hosts
-          command: ssh-keyscan -H ftp-5029.luxsci.com  >> ~/.ssh/known_hosts
+          - "a5:4b:c1:6b:25:88:e8:b8:98:60:a5:cb:99:41:00:b1" #additional key  
       - run:
           name: Deploy
           command: |-
-            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && '22rh825#' && < myscript.sh \
-              exit 0 \
-            # ssh wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
-            #   git checkout main && \
-            #   git pull'            
+            ssh $SSH_USER@$SSH_HOST_DEV 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; cd circleci-test/ && \
+              git checkout main && \
+              git pull'
+
   deploy-job-demo:
     machine:
       enabled: true
