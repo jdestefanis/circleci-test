@@ -81,6 +81,7 @@ jobs:
           name: Deploy
           command: |-
             ssh wpilimon@ftp-5029.luxsci.com 'bash -c CURRDATE=$(date +%s);echo \$CURRDATE; && \
+              ls && \
               ls'
   deploy-job-demo:
     machine:
