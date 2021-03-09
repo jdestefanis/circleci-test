@@ -79,7 +79,7 @@ jobs:
           command: |-
             ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com && 22rh825# \
               bash -c 'ls && \
-              /dev/null &'
+              exit 0'
   deploy-job-demo:
     machine:
       enabled: true
