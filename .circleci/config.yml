@@ -117,7 +117,7 @@ workflows:
             branches:
               only: main #Branch que elegimos para deployar en dev dev
 
-      - approve-demo-deploy:
+      - approve-demo-deploy: 
           type: approval # Es necesario aprobar el deploy a staging desde github
           filters:
             tags:
