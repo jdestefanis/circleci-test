@@ -77,10 +77,9 @@ jobs:
       - run:
           name: Deploy
           command: |-
-            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com \
-              22rh825# \
+            ssh -p122 wpilimon@ezscriptrx.com@ftp-5029.luxsci.com 22rh825# \
               ls && \
-              exit
+              exit \
   deploy-job-demo:
     machine:
       enabled: true
